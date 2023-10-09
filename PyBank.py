@@ -28,22 +28,19 @@ with open(budgetCsv) as csvFile:
     for col in range(1, len(profNloss)):
         # The changes in "Profit/Losses" over the entire period, and then the average of those changes
         profChange.append((int(profNloss[col]) - int(profNloss[col - 1])))
-        avgChange = sum(profChange) / len(profChange)
+        avgChange = round(sum(profChange) / len(profChange),2)
 
         greatestInc = max(profChange)
         greatestDec = min(profChange)
 
-grtIncdate = date[profChange.index(min(profChange))+1]
-grtDecdate = date[profChange.index(max(profChange))+1]
+grtDecdate = date[profChange.index(min(profChange))+1]
+grtIncdate = date[profChange.index(max(profChange))+1]
 
-print("Financial Analysis" + "\n")
-print("........................................................................." + "\n")
-print(f"Total Months: {totalMonths}" + "\n")
-print(f"Total: ${totalAmt}"  "\n")
-print(f"Average Change: ${round(avgChange/(totalMonths-1),2)}" + "\n")
-print(f"Greatest Increase in Profits: {grtIncdate} (${greatestInc})" + "\n")
-print(f"Greatest Decrease in Profits: {grtDecdate} (${greatestDec})" + "\n")
-
-
-
-
+with open("PyBank.txt", "wt") as f:
+    print("Financial Analysis", file = f)
+    print(".........................................................................", file = f)
+    print(f"Total Months: {totalMonths}", file = f)
+    print(f"Total: ${totalAmt}", file = f)
+    print(f"Average Change: ${avgChange}", file = f)
+    print(f"Greatest Increase in Profits: {grtIncdate} (${greatestInc})", file = f)
+    print(f"Greatest Decrease in Profits: {grtDecdate} (${greatestDec})", file = f)
